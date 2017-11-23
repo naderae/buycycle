@@ -10,25 +10,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171016161636) do
+ActiveRecord::Schema.define(version: 20171123191536) do
 
-  create_table "bikes", force: :cascade do |t|
-    t.string "type"
-    t.string "brand"
-    t.string "frame_size"
-    t.string "frame_material"
-    t.string "gear"
-    t.integer "price"
+  create_table "conversations", force: :cascade do |t|
+    t.integer "sender_id"
+    t.integer "recipient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "body"
+    t.integer "conversation_id"
+    t.integer "user_id"
+    t.boolean "read", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
-    t.index ["user_id"], name: "index_bikes_on_user_id"
+    t.string "post_type"
+    t.string "service_type"
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.integer "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
     t.string "password_digest"
+    t.string "role"
+    t.string "service"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

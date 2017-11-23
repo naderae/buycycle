@@ -1,0 +1,10 @@
+
+<h1>Edit post form </h1>
+
+<%= form_for [@user, @post] do |f| %>
+
+  What Kind of post is this? : <%= f.select :post_type, ['Request Service', 'Provide Service'], :prompt => 'Select One' %>
+  What Kind of Service are you Providing/Asking for? : <%= f.select :service_type, ['Tutoring', 'Home Improvement', 'Personal Training'] %>
+  Job Specifics<%= f.text_area :content %>
+  <%= f.submit "Submit"%>
+<% end %>

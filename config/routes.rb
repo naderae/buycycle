@@ -2,13 +2,21 @@ Rails.application.routes.draw do
 
   root 'users#new'
 
-  resource :users, :only => [:new, :create]
-
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
 
-  resources :bikes, only: [:index]
+  resources :users do
+    resources :posts
+    resources :ratings
+  end
+
+resources :conversations do
+  resources :messages
+ end
+
+
+  get '/home' => 'users#index'
 
 
 end

@@ -1,0 +1,63 @@
+
+<h1>HomePage</h1>
+
+<% @users.each do |user| %>
+  <%= user.username %>
+<% end %>
+
+<% @posts.each do |post| %>
+  <%= post.content %>
+<% end %>
+
+
+
+
+
+<% if current_user %>
+  <h2>All Posts</h2>
+  <br>
+  <% @users.each do |user| %>
+    <% if user.posts.length > 0 %>
+      <%= link_to user.username, user_path(user) %>
+    <% end %>
+    <% user.posts.each do |post|%>
+     <ul>
+       <li><%= post.post_type%></li>
+       <li><%= post.service_type%></li>
+       <li><%= post.content%></li>
+     </ul>
+    <% end %>
+  <% end %>
+<% end %>
+
+/////////////////////////////////////////////////////////////////////////
+
+
+<% if current_user && current_user.role == 'Provide Service'%>
+  <h2>Users Requiring your service</h2>
+  <% @users.each do |user| %>
+    <% user.posts.each do |post| %>
+      <% if post.post_type != current_user.role && post.service_type === current_user.service %>
+        <h3><%= post.post_type %></h3>
+        <h3><%= post.service_type %></h3>
+        <h3><%= post.content %></h3>
+        <h3><%= link_to user.username, user_path(user) %></h3>
+
+      <% end %>
+    <% end %>
+  <% end %>
+
+<% elsif current_user && current_user.role == 'Request Service'%>
+  <h2>Users Providing your required service</h2>
+  <% @users.each do |user| %>
+    <% user.posts.each do |post| %>
+      <% if post.post_type != current_user.role && post.service_type == current_user.service %>
+        <h3><%= post.post_type %></h3>
+        <h3><%= post.service_type %></h3>
+        <h3><%= post.content %></h3>
+        <h3><%= link_to user.username, user_path(user) %></h3>
+
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
