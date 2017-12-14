@@ -1,36 +1,71 @@
 
-<h1>HomePage</h1>
-
-<% @users.each do |user| %>
-  <%= user.username %>
-<% end %>
-
-<% @posts.each do |post| %>
-  <%= post.content %>
-<% end %>
 
 
 
 
 
-<% if current_user %>
+
+<h1>HomePage</h1><br>
   <h2>All Posts</h2>
   <br>
-  <% @users.each do |user| %>
-    <% if user.posts.length > 0 %>
-      <%= link_to user.username, user_path(user) %>
-    <% end %>
-    <% user.posts.each do |post|%>
-     <ul>
-       <li><%= post.post_type%></li>
-       <li><%= post.service_type%></li>
-       <li><%= post.content%></li>
-     </ul>
+  <% if current_user %>
+    <% @users.each do |user| %>
+      <% if user.posts.length > 0 %>
+        <% user.posts.each do |post|%>
+          <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
+          <div class="container">
+
+              <div class="well">
+                <div class="media">
+                  <a class="pull-left" href="#">
+                  <img class="media-object" src="../public/images/medium/missing.png">
+                </a>
+
+                <div class="media-body">
+                  <h4 class="media-heading"><%= post.post_type %> || <%= post.service_type%></h4>
+
+                    <p class="text-right">By <%= link_to user.username + "- click to see complete posting ", user_path(user) %></p>
+
+                    <p><%= post.content.split(" ").join(" ")[0..30] %>...</p>
+                    <ul class="list-inline list-unstyled">
+                  <li><span><i class="glyphicon glyphicon-calendar"></i> <%= post.created_at %> </span></li>
+                      <li>|</li>
+                      <li>
+                         <span class="glyphicon glyphicon-star"></span>
+                                  <span class="glyphicon glyphicon-star"></span>
+                                  <span class="glyphicon glyphicon-star"></span>
+                                  <span class="glyphicon glyphicon-star"></span>
+                                  <span class="glyphicon glyphicon-star-empty"></span>
+                      </li>
+                      <li>|</li>
+                      <li>
+                      <!-- Use Font Awesome http://fortawesome.github.io/Font-Awesome/ -->
+
+                </ul>
+                 </div>
+              </div>
+            </div>
+          </div>
+
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
 
-/////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////``
 
 
 <% if current_user && current_user.role == 'Provide Service'%>
@@ -38,24 +73,108 @@
   <% @users.each do |user| %>
     <% user.posts.each do |post| %>
       <% if post.post_type != current_user.role && post.service_type === current_user.service %>
-        <h3><%= post.post_type %></h3>
-        <h3><%= post.service_type %></h3>
-        <h3><%= post.content %></h3>
-        <h3><%= link_to user.username, user_path(user) %></h3>
+
+
+      <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
+      <div class="container">
+        <div class="well">
+            <div class="media">
+              <a class="pull-left" href="#">
+              <img class="media-object" src="http://placekitten.com/150/150">
+            </a>
+            <div class="media-body">
+              <h4 class="media-heading"><%= post.post_type %> || <%= post.service_type %></h4>
+                <p class="text-right">By <%= link_to user.username + "- click to see complete posting ", user_path(user) %> </p>
+                <p><%= post.content.split(" ").join(" ")[0..30] %>...</p>
+                <ul class="list-inline list-unstyled">
+              <li><span><i class="glyphicon glyphicon-calendar"></i> <%= post.created_at %></span></li>
+                  <li>|</li>
+                  <span><i class="glyphicon glyphicon-comment"></i> 2 comments</span>
+                  <li>|</li>
+                  <li>
+                     <span class="glyphicon glyphicon-star"></span>
+                              <span class="glyphicon glyphicon-star"></span>
+                              <span class="glyphicon glyphicon-star"></span>
+                              <span class="glyphicon glyphicon-star"></span>
+                              <span class="glyphicon glyphicon-star-empty"></span>
+                  </li>
+                  <li>|</li>
+                  <li>
+
+                    <span><i class="fa fa-facebook-square"></i></span>
+                    <span><i class="fa fa-twitter-square"></i></span>
+                    <span><i class="fa fa-google-plus-square"></i></span>
+                  </li>
+            </ul>
+             </div>
+          </div>
+        </div>
+
+      </div>
+
+
+
+
+
+
 
       <% end %>
     <% end %>
   <% end %>
+
+
+
+
+
+
+
+
 
 <% elsif current_user && current_user.role == 'Request Service'%>
   <h2>Users Providing your required service</h2>
   <% @users.each do |user| %>
     <% user.posts.each do |post| %>
       <% if post.post_type != current_user.role && post.service_type == current_user.service %>
-        <h3><%= post.post_type %></h3>
-        <h3><%= post.service_type %></h3>
-        <h3><%= post.content %></h3>
-        <h3><%= link_to user.username, user_path(user) %></h3>
+
+
+
+            <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
+            <div class="container">
+              <div class="well">
+                  <div class="media">
+                  	<a class="pull-left" href="#">
+                		<img class="media-object" src="http://placekitten.com/150/150">
+              		</a>
+              		<div class="media-body">
+                		<h4 class="media-heading"><%= post.post_type %> || <%= post.service_type %></h4>
+                      <p class="text-right">By <%= link_to user.username + "- click to see complete posting ", user_path(user) %> </p>
+                      <p><%= post.content.split(" ").join(" ")[0..30] %>...</p>
+                      <ul class="list-inline list-unstyled">
+              			<li><span><i class="glyphicon glyphicon-calendar"></i> <%= post.created_at %></span></li>
+                        <li>|</li>
+                        <span><i class="glyphicon glyphicon-comment"></i> 2 comments</span>
+                        <li>|</li>
+                        <li>
+                           <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star-empty"></span>
+                        </li>
+                        <li>|</li>
+                        <li>
+
+                          <span><i class="fa fa-facebook-square"></i></span>
+                          <span><i class="fa fa-twitter-square"></i></span>
+                          <span><i class="fa fa-google-plus-square"></i></span>
+                        </li>
+            			</ul>
+                   </div>
+                </div>
+              </div>
+
+            </div>
+
 
       <% end %>
     <% end %>

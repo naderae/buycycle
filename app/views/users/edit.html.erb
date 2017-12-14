@@ -1,0 +1,16 @@
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Join The Community</div>
+      <div class="panel-body">
+        <h1>Edit Information!</h1><br>
+          <%= simple_form_for :user, :url => {:action => "updateAvatar", :id => @user} do |f| %>
+            <%= render 'shared/error_messages' %>
+
+            <%= f.file_field :avatar, label: "Avatar" %><br>
+            <%= f.button :submit %>
+          <% end %>
+      </div>
+    </div>
+  </div>

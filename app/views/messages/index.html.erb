@@ -2,10 +2,19 @@
 <% if @over_ten %>
  <%= link_to 'Show Previous', '?m=all' %>
 <% end %>
+
+
 <div class="ui segment">
+  <h2>Your Conversatin with
+  <% if current_user.id == @conversation.sender_id %>
+    <%= @conversation.recipient.username %>
+  <% elsif current_user.id == @conversation.recipient_id %>
+    <%= @conversation.sender.username%>
+  <% end %>
+  </h2>
  <% @messages.each do |message| %>
   <% if message.body %>
-   <% user = User.find(message.user_id) %>
+   <% user = User.find(message.sender_id) %>
    <div class="item">
     <div class="content">
      <div class="header"><strong><%= user.username %></strong>     <%= message.message_time %></div>
@@ -21,12 +30,17 @@
 <% end %>
 </div>
 
+<% console %>
+
 <%= form_for [@conversation, @message], html: {class: "ui reply form"} do |f| %>
  <div class="field">
    <%= f.text_area :body, class: "form-control" %>
  </div>
- <%= f.text_field :user_id, value: current_user.id, type: "hidden" %>
+ <%= f.text_field :sender_id, value: current_user.id, type: "hidden" %>
+ <%= f.text_field :recipient_id, value: @user.id, type: "hidden" %>
  <div>
    <%= f.submit "Add Reply", class: "ui blue labeled submit icon button" %>
  </div>
 <% end %>
+
+<%= @message.body %>

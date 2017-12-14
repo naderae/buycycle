@@ -7,6 +7,16 @@ class MessagesController < ApplicationController
 
 
 def index
+
+  if @conversation.sender === current_user
+    @user = @conversation.recipient
+  else
+    @user = @conversation.sender
+  end
+
+  
+
+
  @messages = @conversation.messages
   if @messages.length > 10
    @over_ten = true
@@ -17,12 +27,14 @@ def index
    @messages = @conversation.messages
   end
  if @messages.last
-  if @messages.last.user_id != current_user.id
+  if @messages.last.sender_id != current_user.id
    @messages.last.read = true;
+   @messages.last.save
   end
  end
-@message = @conversation.messages.new
- end
+ # @unread = @conversation.messages.where(read: false).where.not(id: nil).where.not(user: current_user)
+ @message = @conversation.messages.new
+end
 
 
 
@@ -43,6 +55,6 @@ end
 
 private
  def message_params
-  params.require(:message).permit(:body, :user_id)
+  params.require(:message).permit(:body, :sender_id, :recipient_id)
  end
 end
