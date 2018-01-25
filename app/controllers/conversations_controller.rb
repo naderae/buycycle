@@ -5,6 +5,10 @@ def index
  @users = User.all
  @conversations = Conversation.all
 
+# @conversations_sorted = @conversations.sort{|a, b| a.messages.last.created_at <=> b.messages.last.created_at}
+
+
+
  @convos = @conversations.where(recipient_id: current_user.id).or(@conversations.where(sender_id: current_user.id))
 end
 

@@ -3,10 +3,9 @@
 <div class="row">
   <div class="col-xs-12">
     <div class="jumbotron">
-      <% if @user.avatar %>
-        <%= image_tag(@user.avatar.url(:thumb)) %>
+      <% if @user.avatar.exists? %>
+        <%= image_tag(@user.avatar.url(:medium)) %>
       <% end %>
-
       <h1><%=@user.username%>'s Profile Page</h1>
     </div>
   </div>
@@ -33,11 +32,11 @@
               <% my_ratings.push(rating.value) %>
             <% end %>
           <% end %>
-          <%= @user.average_rating(my_ratings) %>
-            <span class="star-rating" data-score= <%= @user.average_rating(my_ratings) %>></span>
+            <span class=" star-rating" data-score= <%= @user.average_rating(my_ratings) %>></span>
+            (<%= @user.average_rating(my_ratings) %>)
         <% else %>
-          <%= @user.average_rating([0]) %>
-            <span class="star-rating" data-score= <%= @user.average_rating([0]) %>></span>
+            <span class=" star-rating" data-score= <%= @user.average_rating([0]) %>></span>
+            (<%= @user.average_rating([0]) %>)
         <% end %>
 
       </div>
@@ -100,12 +99,7 @@
 
         <% if @user.id == current_user.id%>
           <h3>Update Profile pic </h3><br>
-
-
-
-          <%= link_to 'Edit', edit_user_path(@user)%>
-
-
+          <%= link_to 'Edit', edit_user_path(@user.id)%>
       <% end %>
       </div>
     </div>

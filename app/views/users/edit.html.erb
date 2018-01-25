@@ -4,13 +4,11 @@
     <div class="panel panel-primary">
       <div class="panel-heading">Join The Community</div>
       <div class="panel-body">
-        <h1>Edit Information!</h1><br>
-          <%= simple_form_for :user, :url => {:action => "updateAvatar", :id => @user} do |f| %>
-            <%= render 'shared/error_messages' %>
-
-            <%= f.file_field :avatar, label: "Avatar" %><br>
-            <%= f.button :submit %>
-          <% end %>
+        <h1>Change Profile Picture!</h1><br>
+        <%= form_for edit_user_path(current_user.id), :html => { :multipart => true } do |form| %>
+          <%= form.file_field :avatar %>
+          <%= form.submit "upload" %>
+        <% end %>
       </div>
     </div>
   </div>

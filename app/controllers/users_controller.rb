@@ -26,9 +26,8 @@ class UsersController < ApplicationController
       UserMailer.registration_confirmation(@user).deliver
       session[:user_id] = @user.id
       flash[:notice] = "Account successfully created"
-      redirect_to '/home'
+      redirect_to users_path
     else
-      flash[:notice] = 'Sorry Try Again'
       render :new
     end
     @rating = Rating.new
@@ -41,18 +40,22 @@ class UsersController < ApplicationController
   end
 
 
+
   def update
     @user = User.find(params[:id])
-    if @user.save
-      flash[:notice] = 'Your Rating has successfully been created'
-      redirect_to user_path(@user.id)
-    else
-      flash[:alert] = "Rating failed to save"
-      render :edit
-    end
+    @user.update_attribute(:avatar, params[:user][:avatar])
+
+    # @user.avatar = params[:rating][:value]
+    # if @user.save
+    #   flash[:notice] = 'Avatar has been successfully updated'
+    #   redirect_to user_path(@user.id)
+    # else
+    #   flash[:alert] = "Avatar failed to save"
+    #   render :edit
+    # end
   end
 
-  
+
 
 
 

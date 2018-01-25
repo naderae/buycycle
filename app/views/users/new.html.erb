@@ -5,7 +5,8 @@
       <div class="panel-heading">Join The Community</div>
       <div class="panel-body">
         <h1>Signup!</h1><br>
-        <%= simple_form_for :user, url: '/users' do |f| %>
+
+        <%= simple_form_for @user, validate: true do |f| %>
         <% if @user.errors.any? %>
           <div id="error_explanation">
             <div class="alert alert-danger">

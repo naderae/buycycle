@@ -14,7 +14,7 @@ def index
     @user = @conversation.sender
   end
 
-  
+
 
 
  @messages = @conversation.messages
@@ -32,7 +32,8 @@ def index
    @messages.last.save
   end
  end
- # @unread = @conversation.messages.where(read: false).where.not(id: nil).where.not(user: current_user)
+ 
+ # @unread = @conversation.messages.where(read: false).where.not(id: nil).where.not(sender: current_user)
  @message = @conversation.messages.new
 end
 

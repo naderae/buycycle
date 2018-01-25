@@ -91,7 +91,8 @@
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="home">
                     <div class="list-group">
-                      <% @conversations.each do |conversation| %>
+
+                      <% @conversations.sort{|a, b| b.created_at <=> a.created_at}.each do |conversation| %>
 
                         <% if conversation.sender_id == current_user.id || conversation.recipient_id == current_user.id %>
                          <% if conversation.sender_id == current_user.id %>
@@ -102,26 +103,32 @@
 
 
 
+
                         <div class="list-group-item">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox">
+
                                 </label>
                             </div>
                             <span class="glyphicon glyphicon-star-empty"></span><span class="name" style="min-width: 120px;
                                 display: inline-block;"><%= link_to recipient.username, conversation_messages_path(conversation)%></span>
                                 <span class="">
+
                                   <% if conversation.messages.last %>
-                                    <%= conversation.messages.last.body %>
+                                    <% if conversation.messages.last.recipient == current_user && conversation.messages.last.read == false%>
+                                      <div class="align-text-top" style="color:red">You have an unread message from <%= conversation.messages.last.sender.username%></div>
+                                    <% end %>
+                                    <strong><%= conversation.messages.last.body.split(" ").join(" ")[0..25] %>...</strong>
+
                                   <% else %>
-                                    <%= "No Messages Yet" %>
-                                <% end %>
+                                    <spam style="color:red"><%= "No Messages Yet" %></spam>
+                                  <% end %>
 
                                 </span>
                             <span class="text-muted" style="font-size: 11px;"></span>
                             <span class="badge">
                               <% if conversation.messages.last %>
-                                <%= conversation.messages.last.created_at %>
+                                <%= conversation.messages.last.message_time %>
                               <% else %>
                                 <%= "N.A" %>
                               <% end %>
@@ -177,3 +184,5 @@
  <% end %>
  </div>
 </div>
+
+<% console %>
